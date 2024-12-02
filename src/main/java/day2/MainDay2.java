@@ -42,10 +42,24 @@ public class MainDay2 {
         }
     }
 
-    // Method to validate a row
     public static boolean isRowValid(List<Integer> row) {
-        if (row.isEmpty()) return true; // An empty row is valid (no data to check)
+        if (row.isEmpty()) return true; // An empty row is valid
 
+        // Helper function to check if a row is valid without modifications
+        if (isValidWithoutModification(row)) return true;
+
+        // Try removing one level and check if the remaining row becomes valid
+        for (int i = 0; i < row.size(); i++) {
+            List<Integer> modifiedRow = new ArrayList<>(row);
+            modifiedRow.remove(i); // Simulate removing the problematic level
+            if (isValidWithoutModification(modifiedRow)) return true;
+        }
+
+        return false; // The row cannot be made valid, even with one removal
+    }
+
+    // Helper method to check validity without modification
+    private static boolean isValidWithoutModification(List<Integer> row) {
         boolean isIncreasing = true;
         boolean isDecreasing = true;
 
@@ -62,7 +76,7 @@ public class MainDay2 {
             }
         }
 
-        // The row must be strictly increasing or strictly decreasing
-        return isIncreasing || isDecreasing;
+        return isIncreasing || isDecreasing; // Must be strictly increasing or decreasing
     }
+
 }
